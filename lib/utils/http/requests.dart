@@ -40,23 +40,34 @@ class HttpRequest {
   }
 
   // get 请求
-  Future get(String url, {Map<String, dynamic>? params}) async {
+  Future get(
+    String url, {
+    Map<String, dynamic>? params,
+    Options? options,
+  }) async {
     Response resp = await _dio.get(
       url,
       queryParameters: params,
       cancelToken: _cancelToken,
+      options: options,
     );
 
     return resp.data;
   }
 
   // post 请求
-  Future post(String url, {data, Map<String, dynamic>? query}) async {
+  Future post(
+    String url, {
+    data,
+    Map<String, dynamic>? query,
+    Options? options,
+  }) async {
     Response resp = await _dio.post(
       url,
       data: data,
       queryParameters: query,
       cancelToken: _cancelToken,
+      options: options,
     );
 
     return resp.data;
