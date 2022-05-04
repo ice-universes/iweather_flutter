@@ -1,3 +1,5 @@
+import 'data_with_desc.dart';
+
 class AqiInfoItem {
   late String color1;
   late String color2;
@@ -99,16 +101,12 @@ class AqiInfo {
   }
 }
 
-class Pollution {
-  late String unit;
-  late String name;
-  late num value;
-
+class Pollution extends DataWithDesc {
   Pollution({
-    required this.value,
-    required this.name,
-    this.unit = 'μg/m³',
-  });
+    required num value,
+    required String name,
+    String unit = 'μg/m³',
+  }) : super(value, name, unit);
 }
 
 class Components {
@@ -147,5 +145,3 @@ class Air {
     info = AqiInfo.aqiInfo(aqi);
   }
 }
-
-
