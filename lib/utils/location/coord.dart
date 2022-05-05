@@ -14,6 +14,9 @@ class Coord {
 
   @override
   String toString() {
-    return "{lat: $latitude, lon: $longitude, address: $address, city: $city}";
+    return ('# 纬度: $latitude\n'
+        '# 经度: $longitude\n'
+        '# 地址: $address\n'
+        '# 城市: $city\n');
   }
 }
