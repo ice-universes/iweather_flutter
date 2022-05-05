@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'utils/weather/openWeather.dart';
+import 'utils/location/coord.dart';
 
 void main() {
   runApp(const MyApp());
@@ -63,6 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Coord coord = Coord(latitude: 20, longitude: 110);
+    openWeather
+        .allWeatherInfo(coord)
+        .then((res) => print(res.air.toString()));
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
