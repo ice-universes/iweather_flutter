@@ -11,4 +11,9 @@ class Coord {
     this.address,
     this.city,
   });
+
+  @override
+  String toString() {
+    return "{lat: $latitude, lon: $longitude, address: $address, city: $city}";
+  }
 }
