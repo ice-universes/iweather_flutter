@@ -1,5 +1,3 @@
-import 'data_with_desc.dart';
-
 class AqiInfoItem {
   late String color1;
   late String color2;
@@ -101,12 +99,17 @@ class AqiInfo {
   }
 }
 
-class Pollution extends DataWithDesc {
-  Pollution({
-    required num value,
-    required String name,
-    String unit = 'μg/m³',
-  }) : super(value, name, unit);
+class Pollution {
+  late String unit; // 单位
+  late String name; // 名称
+  late num? value; // 数据
+
+  Pollution(this.name, [this.value, this.unit = 'μg/m³']);
+
+  @override
+  String toString() {
+    return '$value $unit';
+  }
 }
 
 class Components {
@@ -120,28 +123,53 @@ class Components {
   late Pollution? nh3;
   late Pollution? no;
 
-  Components.fromMap(Map<String, dynamic> map) {
-    pm10 = Pollution(value: map['pm10'], name: 'PM10');
-    pm2p5 = Pollution(value: map['pm2_5'], name: 'PM2.5');
-    no2 = Pollution(value: map['no2'], name: 'NO₂');
-    so2 = Pollution(value: map['so2'], name: 'SO₂');
-    co = Pollution(value: map['co'], name: 'CO');
-    o3 = Pollution(value: map['o3'], name: 'O₃');
-    nh3 = Pollution(value: map['nh3'], name: 'NH₃');
-    no = Pollution(value: map['no'], name: 'NO');
+  Components({
+    num? pm10,
+    num? pm2p5,
+    num? no2,
+    num? so2,
+    num? co,
+    num? o3,
+    num? nh3,
+    num? no,
+  }) {
+    this.pm10 = Pollution('PM10', pm10);
+    this.pm2p5 = Pollution('PM2.5', pm2p5);
+    this.no2 = Pollution('NO₂', no2);
+    this.so2 = Pollution('SO₂', so2);
+    this.co = Pollution('CO', co);
+    this.o3 = Pollution('O₃', o3);
+    this.nh3 = Pollution('NH₃', nh3);
+    this.no = Pollution('NO', no);
+  }
+
+  @override
+  String toString() {
+    return ('## pm10: ${pm10.toString()}\n'
+        '## pm2p5: ${pm2p5.toString()}\n'
+        '## so2: ${so2.toString()}\n'
+        '## co: ${co.toString()}\n'
+        '## o3: ${o3.toString()}\n'
+        '## nh3: ${nh3.toString()}\n'
+        '## no: ${no.toString()}\n');
   }
 }
 
 class Air {
-  late DateTime pubTime; // 发布时间
+  late DateTime? pubTime; // 发布时间
   late int aqi; // 空气质量指数
-  late AqiInfoItem? info; // 当前空气质量信息(可空)
-  late Components components;
+  late AqiInfoItem? info; // 当前空气质量信息
+  late Components? components; // 污染物组成
 
-  Air.fromMap(Map<String, dynamic> map) {
-    components = Components.fromMap(map['components']);
-    pubTime = DateTime.fromMillisecondsSinceEpoch(map['dt']);
-    aqi = map['main']['aqi'];
+  Air(this.aqi, {int? dt, this.components}) {
+    pubTime = dt == null ? null : DateTime.fromMillisecondsSinceEpoch(dt);
     info = AqiInfo.aqiInfo(aqi);
+  }
+
+  @override
+  String toString() {
+    return ('# 空气质量指数: $aqi,\n'
+        '## 污染物组成 ##\n'
+        '$components');
   }
 }
