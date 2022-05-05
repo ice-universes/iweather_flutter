@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^4.0.6 # http request
   get: ^4.6.1 # state manager
+  intl: ^0.17.0 # format
+  uuid: ^3.0.6 # obtain uuid
 
 dev_dependencies:
   flutter_test:
