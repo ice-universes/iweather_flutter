@@ -133,7 +133,7 @@ class WeatherInfoItem {
     this.grndLevel,
     this.seaLevel,
   }) {
-    dateTime = dt == null ? null : DateTime.fromMillisecondsSinceEpoch(dt);
+    dateTime = dt == null ? null : DateTime.fromMillisecondsSinceEpoch(dt * 1000);
   }
 }
 

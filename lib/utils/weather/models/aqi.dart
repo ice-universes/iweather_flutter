@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class AqiInfoItem {
   late String color1;
   late String color2;
@@ -104,7 +106,7 @@ class Pollution {
   late String name; // 名称
   late num? value; // 数据
 
-  Pollution(this.name, [this.value, this.unit = 'μg/m³']);
+  Pollution(this.name, [this.value = 0, this.unit = 'μg/m³']);
 
   @override
   String toString() {
@@ -114,14 +116,14 @@ class Pollution {
 
 class Components {
   // 污染物组成
-  late Pollution? pm10;
-  late Pollution? pm2p5;
-  late Pollution? no2;
-  late Pollution? so2;
-  late Pollution? co;
-  late Pollution? o3;
-  late Pollution? nh3;
-  late Pollution? no;
+  late Pollution pm10;
+  late Pollution pm2p5;
+  late Pollution no2;
+  late Pollution so2;
+  late Pollution co;
+  late Pollution o3;
+  late Pollution nh3;
+  late Pollution no;
 
   Components({
     num? pm10,
@@ -153,17 +155,28 @@ class Components {
         '## nh3: ${nh3.toString()}\n'
         '## no: ${no.toString()}\n');
   }
+
+  List<Pollution> toList() {
+    return [pm10, pm2p5, no2, so2, co, o3, nh3, no];
+  }
 }
 
 class Air {
   late DateTime? pubTime; // 发布时间
   late int aqi; // 空气质量指数
   late AqiInfoItem? info; // 当前空气质量信息
-  late Components? components; // 污染物组成
+  late Components components; // 污染物组成
 
-  Air(this.aqi, {int? dt, this.components}) {
-    pubTime = dt == null ? null : DateTime.fromMillisecondsSinceEpoch(dt);
+  Air({int? dt, required this.aqi, required this.components}) {
+    pubTime = dt == null ? null : DateTime.fromMillisecondsSinceEpoch(dt * 1000);
     info = AqiInfo.aqiInfo(aqi);
+  }
+
+  String get dt {
+    print(pubTime?.hour);
+    return pubTime == null
+        ? ''
+        : DateFormat('yyyy-MM-dd HH:mm:ss').format(pubTime!);
   }
 
   @override

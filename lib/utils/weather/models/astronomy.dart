@@ -5,8 +5,8 @@ class Sun {
   late DateTime? _sunSet;
 
   Sun({int? sr, int? ss}) {
-    _sunRise = sr == null ? null : DateTime.fromMillisecondsSinceEpoch(sr);
-    _sunSet = ss == null ? null : DateTime.fromMillisecondsSinceEpoch(ss);
+    _sunRise = sr == null ? null : DateTime.fromMillisecondsSinceEpoch(sr * 1000);
+    _sunSet = ss == null ? null : DateTime.fromMillisecondsSinceEpoch(ss * 1000);
   }
 
   String get sunRise {
@@ -30,8 +30,8 @@ class Moon {
   late num? moonPhase;
 
   Moon({int? mr, int? ms, this.moonPhase}) {
-    _moonRise = mr == null ? null : DateTime.fromMillisecondsSinceEpoch(mr);
-    _moonSet = ms == null ? null : DateTime.fromMillisecondsSinceEpoch(ms);
+    _moonRise = mr == null ? null : DateTime.fromMillisecondsSinceEpoch(mr * 1000);
+    _moonSet = ms == null ? null : DateTime.fromMillisecondsSinceEpoch(ms * 1000);
   }
 
   String get moonRise {

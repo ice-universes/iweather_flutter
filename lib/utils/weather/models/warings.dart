@@ -15,7 +15,7 @@ class WaringItem {
     this.description,
   }) {
     this.start =
-        start == null ? null : DateTime.fromMillisecondsSinceEpoch(start);
-    this.end = end == null ? null : DateTime.fromMillisecondsSinceEpoch(end);
+        start == null ? null : DateTime.fromMillisecondsSinceEpoch(start * 1000);
+    this.end = end == null ? null : DateTime.fromMillisecondsSinceEpoch(end * 1000);
   }
 }

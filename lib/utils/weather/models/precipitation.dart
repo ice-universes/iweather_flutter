@@ -35,7 +35,7 @@ class PrecipItem {
   late DateTime? dateTime; // 降水时刻
 
   PrecipItem({int? dt, this.precipitation}) {
-    dateTime = dt == null ? null : DateTime.fromMillisecondsSinceEpoch(dt);
+    dateTime = dt == null ? null : DateTime.fromMillisecondsSinceEpoch(dt * 1000);
   }
 
   String get dt {
