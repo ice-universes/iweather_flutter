@@ -11,7 +11,7 @@ typedef Op = OpenWeatherHandler;
 class OpenWeatherHandler extends Handler {
   static Air airHandler(Map<String, dynamic> map) {
     return Air(
-      map['main']['aqi'],
+      aqi: map['main']['aqi'],
       dt: map['dt'],
       components: Components(
         co: map['components']['co'],
