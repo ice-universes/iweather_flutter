@@ -28,7 +28,7 @@ class TempuratureItem {
   /// units: K
   /// metric: ℃
   /// imperial: ℉
-  late num? temp;
+  late num temp;
   late num? maxTemp;
   late num? minTemp;
   late num? night;
@@ -56,7 +56,7 @@ class TempuratureItem {
   }
 
   TempuratureItem({
-    this.temp,
+    required this.temp,
     this.eve,
     this.night,
     this.morn,
