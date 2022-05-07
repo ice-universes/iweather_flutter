@@ -1,13 +1,15 @@
+import 'dart:ui';
+
 import 'package:intl/intl.dart';
 
 class AqiInfoItem {
-  late String color1;
-  late String color2;
-  late String desc;
-  late String category;
-  late int level;
-  late int max;
-  late int min;
+  late final Color color1;
+  late final Color color2;
+  late final String desc;
+  late final String category;
+  late final int level;
+  late final int max;
+  late final int min;
 
   AqiInfoItem({
     required this.color1,
@@ -23,8 +25,8 @@ class AqiInfoItem {
 // 空气质量 wiki: https://en.wikipedia.org/wiki/Air_quality_index#CAQI
 class AqiInfo {
   static AqiInfoItem excellent = AqiInfoItem(
-    color1: '#56B37F',
-    color2: '#c0e674',
+    color1: const Color(0xff56b37f),
+    color2: const Color(0xffc0e674),
     desc: '空气质量令人满意, 基本无空气污染',
     category: '优',
     level: 1,
@@ -33,8 +35,8 @@ class AqiInfo {
   );
 
   static AqiInfoItem good = AqiInfoItem(
-    color1: '#FCFF00',
-    color2: '#FFA8A8',
+    color1: const Color(0xfffcff00),
+    color2: const Color(0xffffa8a8),
     desc: '空气质量可接受, 但某些污染物可能对极少数异常敏感人群健康有较弱影响',
     category: '良',
     level: 2,
@@ -43,8 +45,8 @@ class AqiInfo {
   );
 
   static AqiInfoItem lightly = AqiInfoItem(
-    color1: '#FEC163',
-    color2: '#DE4313',
+    color1: const Color(0xfffec163),
+    color2: const Color(0xffde4313),
     desc: '易感人群症状有轻度加剧, 健康人群出现刺激症状',
     category: '轻度污染',
     level: 3,
@@ -53,8 +55,8 @@ class AqiInfo {
   );
 
   static AqiInfoItem moderate = AqiInfoItem(
-    color1: '#FFAA85',
-    color2: '#B3315F',
+    color1: const Color(0xffffaa85),
+    color2: const Color(0xffb3315f),
     desc: '进一步加剧易感人群症状, 可能对健康人群心脏、呼吸系统有影响',
     category: '中度污染',
     level: 4,
@@ -63,8 +65,8 @@ class AqiInfo {
   );
 
   static AqiInfoItem heavy = AqiInfoItem(
-    color1: '#EE9AE5',
-    color2: '#5961F9',
+    color1: const Color(0xffee9ae5),
+    color2: const Color(0xff5961f9),
     desc: '心脏病和肺病患者症状显著加剧, 运动耐受力降低, 健康人群普遍出现症状',
     category: '重度污染',
     level: 5,
@@ -73,8 +75,8 @@ class AqiInfo {
   );
 
   static AqiInfoItem serious = AqiInfoItem(
-    color1: '#F05F57',
-    color2: '#360940',
+    color1: const Color(0xfff05f57),
+    color2: const Color(0xff360940),
     desc: '健康人群运动耐受力降低, 有明显强烈症状, 提前出现某些疾病',
     category: '严重污染',
     level: 6,
@@ -168,12 +170,12 @@ class Air {
   late Components components; // 污染物组成
 
   Air({int? dt, required this.aqi, required this.components}) {
-    pubTime = dt == null ? null : DateTime.fromMillisecondsSinceEpoch(dt * 1000);
+    pubTime =
+        dt == null ? null : DateTime.fromMillisecondsSinceEpoch(dt * 1000);
     info = AqiInfo.aqiInfo(aqi);
   }
 
   String get dt {
-    print(pubTime?.hour);
     return pubTime == null
         ? ''
         : DateFormat('yyyy-MM-dd HH:mm:ss').format(pubTime!);
