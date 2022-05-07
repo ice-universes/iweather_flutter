@@ -4,6 +4,7 @@ import 'package:iweather_flutter/store/controller.dart';
 import 'package:iweather_flutter/components/chart/circular_progress.dart';
 import 'package:iweather_flutter/utils/weather/models/weatherInfo.dart';
 import 'package:iweather_flutter/components/custom/IGrid.dart';
+import 'package:iweather_flutter/components/custom/IContainer.dart';
 import 'package:iweather_flutter/utils/weather/models/aqi.dart';
 
 Controller c = Get.find<Controller>();
@@ -45,35 +46,57 @@ class AqiContent extends StatelessWidget {
         Stack(
           alignment: Alignment.center,
           children: [
-            // 进度条
+            // 圆形进度条
             Container(
               width: 200,
               height: 200,
               padding: const EdgeInsets.all(30),
-              child: const CircularProgress(value: 10),
+              child: const CircularProgress(
+                value: 10 / 500,
+              ),
             ),
             Column(
               children: [
                 Text('${air.aqi}', style: const TextStyle(fontSize: 40)),
-                Text('${air.info?.category}'),
+                Chip(
+                  backgroundColor: air.info?.color1,
+                  labelStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                  label: Text('${air.info?.category}'),
+                ),
               ],
             ),
           ],
         ),
-        Container(
-          padding: const EdgeInsets.all(30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                '污染物',
-                style: TextStyle(
-                  fontSize: 20,
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  '污染物',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
                 ),
-              ),
-              Text('发布时间: ${air.dt}'),
-              IGrid(),
-            ],
+                Text('发布时间: ${air.dt}'),
+                IGrid(
+                  children: air.components
+                      .toList()
+                      .map<IContainer>(
+                        (e) => IContainer(
+                          title: e.name,
+                          subTitle: e.unit,
+                          value: e.value!,
+                        ),
+                      )
+                      .toList(),
+                ),
+              ],
+            ),
           ),
         ),
       ],
