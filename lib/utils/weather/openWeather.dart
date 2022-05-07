@@ -7,10 +7,20 @@ import 'package:iweather_flutter/utils/weather/handler/openWeatherHandler.dart';
 import 'package:iweather_flutter/key.dart';
 
 class OpenWeather extends Weather {
-  OpenWeather(
+  // 单例模式
+  static OpenWeather? _single;
+
+  OpenWeather._singleton(
+    String key,
+    String baseUrl,
+  ) : super(key, baseUrl);
+
+  factory OpenWeather(
     String key, {
     String baseUrl = 'http://api.openweathermap.org/data/2.5',
-  }) : super(key, baseUrl);
+  }) {
+    return _single ??= OpenWeather._singleton(key, baseUrl);
+  }
 
   // 获取空气质量
   // 文档: https://openweathermap.org/api/air-pollution
@@ -60,7 +70,11 @@ class OpenWeather extends Weather {
 
   // 一次调用
   // 文档: https://openweathermap.org/api/one-call-api
-  Future<WeatherInfo> allWeatherInfo(Coord coord) async {
+  Future<WeatherInfo> allWeatherInfo(
+    Coord coord, {
+    String units = 'metric',
+    String lang = 'zh_cn',
+  }) async {
     Air air = await airPollution(coord);
 
     Map<String, dynamic> resp = await requests.get(
@@ -69,6 +83,8 @@ class OpenWeather extends Weather {
         'appid': key,
         'lat': coord.latitude,
         'lon': coord.longitude,
+        'units': units,
+        'lang': lang,
       },
     );
 
