@@ -89,6 +89,7 @@ class OpenWeather extends Weather {
     );
 
     WeatherInfo w = Op.weatherInfoHandler(resp);
+    w.unit = units;
 
     w.air = air;
 
