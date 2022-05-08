@@ -18,44 +18,41 @@ class DayItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {}, // 点击事件
-      child: Container(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // 星期
-            Container(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Text(week(weatherInfoItem.dateTime)),
-            ),
-            Container(
-              // 天气状态
-              margin: const EdgeInsets.symmetric(vertical: 5),
-              child: Text(
-                "${weatherInfoItem.description}",
-                style: const TextStyle(
-                  fontSize: 15,
-                ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // 星期
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Text(week(weatherInfoItem.dateTime)),
+          ),
+          Padding(
+            // 天气状态
+            padding: const EdgeInsets.symmetric(vertical: 5),
+            child: Text(
+              "${weatherInfoItem.description}",
+              style: const TextStyle(
+                fontSize: 15,
               ),
             ),
-            Container(
-              // 天气图标
-              margin: const EdgeInsets.symmetric(vertical: 15),
-              child: IconFont(
-                IconFont.getIconNames(
-                  '_${weatherInfoItem.id}_${weatherInfoItem.icon}',
-                ),
-                size: 40,
+          ),
+          Padding(
+            // 天气图标
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            child: IconFont(
+              IconFont.getIconNames(
+                '_${weatherInfoItem.id}_${weatherInfoItem.icon}',
               ),
+              size: 40,
             ),
-            SingleBar(
-              max: (weatherInfoItem.temp?.maxTemp)!,
-              min: (weatherInfoItem.temp?.minTemp)!,
-              average: (weatherInfoItem.temp?.average)!,
-            ),
-          ],
-        ),
+          ),
+          SingleBar(
+            max: (weatherInfoItem.temp?.maxTemp)!,
+            min: (weatherInfoItem.temp?.minTemp)!,
+            average: (weatherInfoItem.temp?.average)!,
+          ),
+        ],
       ),
     );
   }

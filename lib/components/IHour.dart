@@ -25,9 +25,9 @@ class HourItem extends StatelessWidget {
             weatherInfoItem.time,
             style: const TextStyle(fontSize: 15),
           ), // 时间
-          Container(
+          Padding(
             // 天气图标
-            margin: const EdgeInsets.symmetric(vertical: 15),
+            padding: const EdgeInsets.symmetric(vertical: 15),
             child: IconFont(
               IconFont.getIconNames(
                 '_${weatherInfoItem.id}_${weatherInfoItem.icon}',
@@ -35,9 +35,9 @@ class HourItem extends StatelessWidget {
               size: 40,
             ),
           ),
-          Container(
+          Padding(
             // 温度
-            margin: const EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text(
               "${weatherInfoItem.temp?.temp}°",
               style: const TextStyle(
@@ -45,9 +45,9 @@ class HourItem extends StatelessWidget {
               ),
             ),
           ),
-          Container(
+          Padding(
             // 天气状态
-            margin: const EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text(
               "${weatherInfoItem.description}",
               style: const TextStyle(
@@ -65,8 +65,8 @@ class HourItem extends StatelessWidget {
                   color: Color(0xFFF8D800),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 5),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
                 child: Text('${weatherInfoItem.wind?.speed}')
               ),
             ],

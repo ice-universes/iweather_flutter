@@ -19,7 +19,7 @@ class IGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
+      child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: GridView(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
