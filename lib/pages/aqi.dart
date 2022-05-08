@@ -2,34 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iweather_flutter/store/controller.dart';
 import 'package:iweather_flutter/components/chart/circular_progress.dart';
-import 'package:iweather_flutter/utils/weather/models/weatherInfo.dart';
 import 'package:iweather_flutter/components/custom/IGrid.dart';
 import 'package:iweather_flutter/components/custom/IContainer.dart';
 import 'package:iweather_flutter/utils/weather/models/aqi.dart';
 
-Controller c = Get.find<Controller>();
-
 class AqiPage extends StatelessWidget {
-  const AqiPage({Key? key}) : super(key: key);
+  final Controller controller = Get.find<Controller>();
+
+  AqiPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("空气质量"),
-      ),
-      body: FutureBuilder<WeatherInfo>(
-        builder: (context, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done ||
-              snapshot.data?.air == null) {
-            return Container();
-          } else {
-            return AqiContent(air: snapshot.data!.air!);
-          }
-        },
-        future: c.updateWeatherInfo(),
-      ),
-    );
+        appBar: AppBar(
+          title: const Text("空气质量"),
+        ),
+        body: AqiContent(air: (controller.weatherInfo?.air)!));
   }
 }
 
