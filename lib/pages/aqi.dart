@@ -5,6 +5,7 @@ import 'package:iweather_flutter/components/chart/circular_progress.dart';
 import 'package:iweather_flutter/components/custom/IGrid.dart';
 import 'package:iweather_flutter/components/custom/IContainer.dart';
 import 'package:iweather_flutter/utils/weather/models/aqi.dart';
+import 'package:iweather_flutter/components/custom/IScaffold.dart';
 
 class AqiPage extends StatelessWidget {
   final Controller controller = Get.find<Controller>();
@@ -14,10 +15,8 @@ class AqiPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("空气质量"),
-        ),
-        body: AqiContent(air: (controller.weatherInfo?.air)!));
+      body: AqiContent(air: (controller.weatherInfo?.air)!),
+    );
   }
 }
 
@@ -28,9 +27,34 @@ class AqiContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return IScaffold(
+      body: content(),
+    );
+  }
+
+  Widget content() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 20,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Text(
+                '空气质量',
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Colors.black,
+                ),
+              ),
+              Text('发布时间: ${air.dt}'),
+            ],
+          ),
+        ),
         Stack(
           alignment: Alignment.center,
           children: [
@@ -39,13 +63,20 @@ class AqiContent extends StatelessWidget {
               width: 200,
               height: 200,
               padding: const EdgeInsets.all(30),
-              child: const CircularProgress(
+              child: CircularProgress(
                 value: 10 / 500,
+                valueColor: air.info?.color1,
               ),
             ),
             Column(
               children: [
-                Text('${air.aqi}', style: const TextStyle(fontSize: 40)),
+                Text(
+                  '${air.aqi}',
+                  style: TextStyle(
+                    fontSize: 40,
+                    color: air.info?.color1,
+                  ),
+                ),
                 Chip(
                   backgroundColor: air.info?.color1,
                   labelStyle: const TextStyle(
@@ -59,7 +90,8 @@ class AqiContent extends StatelessWidget {
           ],
         ),
         Expanded(
-          child: Container(
+          // 内部存在 GridView, 这里加一层 Expanded
+          child: Padding(
             padding: const EdgeInsets.all(30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +102,6 @@ class AqiContent extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                Text('发布时间: ${air.dt}'),
                 IGrid(
                   children: air.components
                       .toList()
