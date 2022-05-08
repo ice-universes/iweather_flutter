@@ -39,6 +39,8 @@ class TempuratureItem {
   late num? feelsLikeMorn;
   late num? feelsLikeEve;
   late num? feelsLikeNight;
+  late num? average;
+  late num? deltaTemp;
 
   @override
   String toString() {
@@ -67,14 +69,16 @@ class TempuratureItem {
     this.feelsLikeEve,
     this.feelsLikeNight,
     this.feelsLikeMorn,
+    this.average,
+    this.deltaTemp,
   });
 }
 
 class WeatherInfoItem {
-  late DateTime? dateTime; // 发布时间
+  late DateTime dateTime; // 发布时间
   late String? description; // 天气状况
-  late num? id;
-  late String? icon; // 天气图标
+  late num id;
+  late String icon; // 天气图标
   late Wind? wind;
   late num? visibility; // km
   late num? clouds; // %
@@ -92,7 +96,7 @@ class WeatherInfoItem {
 
   @override
   String toString() {
-    return ('# [$dt] 天气状况: $description\n'
+    return ('# [$time] 天气状况: $description\n'
         '${wind.toString()}'
         '# 能见度: $visibility km\n'
         '# 云量: $clouds%\n'
@@ -109,15 +113,19 @@ class WeatherInfoItem {
         '# 空气湿度: $humidity\n');
   }
 
-  String get dt {
-    return dateTime == null ? '' : DateFormat('HH:mm').format(dateTime!);
+  String get time {
+    return DateFormat('HH:mm').format(dateTime);
+  }
+
+  String get date {
+    return DateFormat('MM-dd').format(dateTime);
   }
 
   WeatherInfoItem({
-    int? dt,
-    this.id,
+    required int dt,
+    required this.id,
     this.description,
-    this.icon,
+    required this.icon,
     this.wind,
     this.visibility,
     this.clouds,
@@ -133,12 +141,13 @@ class WeatherInfoItem {
     this.grndLevel,
     this.seaLevel,
   }) {
-    dateTime = dt == null ? null : DateTime.fromMillisecondsSinceEpoch(dt * 1000);
+    dateTime = DateTime.fromMillisecondsSinceEpoch(dt * 1000);
   }
 }
 
 class WeatherInfo {
   late final String uuid;
+  late final String unit; // 当前单位
   late Coord? coord;
   late WeatherInfoItem current;
   late List<WeatherInfoItem>? hourly;

@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:iweather_flutter/utils/weather/handler/handler.dart';
 import 'package:iweather_flutter/utils/weather/models/aqi.dart';
 import 'package:iweather_flutter/utils/weather/models/weatherInfo.dart';
@@ -66,6 +68,26 @@ class OpenWeatherHandler extends Handler {
 
   // 逐日处理
   static List<WeatherInfoItem> dailyHandler(List<dynamic> list) {
+    num t = 0, temp;
+    List<num> max = list.map<num>((e) {
+      temp = e['temp']['max'];
+      t += temp;
+      return temp;
+    }).toList();
+
+    List<num> min = list.map<num>((e) {
+      temp = e['temp']['min'];
+      t += temp;
+      return temp;
+    }).toList();
+
+    num average = t / (list.length * 2);
+
+    num maxTemp = max.reduce((v, e) => math.max(v, e));
+    num minTemp = min.reduce((v, e) => math.min(v, e));
+
+    num deltaTemp = maxTemp - minTemp;
+
     return list.map<WeatherInfoItem>((e) {
       WeatherInfoItem w = weatherInfoItemHandler(e);
 
@@ -92,6 +114,8 @@ class OpenWeatherHandler extends Handler {
         feelsLikeEve: e['feels_like']['eve'],
         feelsLikeNight: e['feels_like']['night'],
         feelsLikeMorn: e['feels_like']['morn'],
+        average: average,
+        deltaTemp: deltaTemp,
       );
 
       if (e['rain'] != null) {
