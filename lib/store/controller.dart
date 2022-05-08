@@ -7,9 +7,10 @@ import 'package:iweather_flutter/utils/location/coord.dart';
 // 全局状态管理
 class Controller extends GetxController {
   late bool isReady;
-  WeatherInfo? weatherInfo;
+  late String location;
+  late WeatherInfo? weatherInfo;
 
-  Controller({this.isReady = false});
+  Controller({this.isReady = false, this.location = '定位中...'});
 
   // 更新天气信息
   Future<WeatherInfo> updateWeatherInfo() async {
